@@ -36,7 +36,7 @@ struct Validator: ValidatorBuilder {
     }
 
     private func checkSize() {
-        if (additions + deletions) > ValidationRules.bigPRThreshold.hashValue {
+        if (additions + deletions) > ValidationRules.bigPRThreshold {
             let message = """
                 PR size seems relatively large.
                 If this PR contains multiple changes, please split each into separate PR.
@@ -66,7 +66,7 @@ struct Validator: ValidatorBuilder {
             warn(message)
         }
 
-        if prTitle.count < ValidationRules.minPRTitle.hashValue {
+        if prTitle.count < ValidationRules.minPRTitle {
             let message = """
                 PR title does not contain a related Jira task. Please use the format `[Jira Code] - Short Description`.
             """
@@ -82,7 +82,7 @@ struct Validator: ValidatorBuilder {
     }
 
     private func checkModifiedFiles() {
-        if changedFiles > ValidationRules.maxChangedFiles.hashValue {
+        if changedFiles > ValidationRules.maxChangedFiles {
             fail("PR contains too many changed files. Please split it in smaller PR")
         }
     }
@@ -106,8 +106,8 @@ struct Validator: ValidatorBuilder {
     }
 }
 
-private enum ValidationRules: Int {
-    case maxChangedFiles = 20
-    case minPRTitle = 10
-    case bigPRThreshold = 3000
+private struct ValidationRules {
+    static let maxChangedFiles = 20
+    static let minPRTitle = 10
+    static let bigPRThreshold = 3000
 }
