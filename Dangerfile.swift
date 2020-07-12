@@ -8,7 +8,7 @@ SwiftLint.lint(.all(directory: nil), inline: true)
 // MARK: - Properties
 let additions = danger.github.pullRequest.additions! 
 let deletions = danger.github.pullRequest.deletions!
-let changedLines = danger.github.pullRequest.changedFiles!
+let changedFiles = danger.github.pullRequest.changedFiles!
 
 let modified = danger.git.modifiedFiles
 let editedFiles = modified + danger.git.createdFiles
@@ -59,20 +59,20 @@ struct Validator: ValidatorBuilder {
 
     private func checkTitle() {
         if prTitle.contains("WIP") {
-            warn("PR is classed as _Work in Progress_.")
+            warn("PR is classed as Work in Progress.")
         }
 
         if prTitle.count < ValidationRules.minPRTitle.hashValue {
             warn("PR title is too short. Please use this format `[Jira Code] - Squad - Short Description`.")
         }
 
-        if !(prTitle.contains("[JIR-") {
+        if !prTitle.contains("[JIR-") {
             warn("PR title does not contain a related Jira task. Please use the format `[Jira Code] - Short Description`.")
         }
     }
 
     private func checkModifiedFiles() {
-        if changedLines > ValidationRules.maxChangedLines.hashValue {
+        if changedFiles > ValidationRules.maxChangedFiles.hashValue {
             fail("PR contains too many changed files. Please split it in smaller PR")
         }
     }
@@ -95,7 +95,7 @@ struct Validator: ValidatorBuilder {
 }
 
 fileprivate enum ValidationRules: Int {
-    case maxChangedLines = 500
+    case maxChangedFiles = 20
     case minPRTitle = 10 
     case bigPRThreshold = 3000
 }
