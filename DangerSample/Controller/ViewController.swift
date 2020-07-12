@@ -12,7 +12,14 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
+        helloWorld()
     }
 
+    private func helloWorld() {
+        if true {
+            print("Hello World")
+            view.backgroundColor = .gray
+        }
+    }
 }

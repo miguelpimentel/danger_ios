@@ -5,9 +5,10 @@
    - colon
    - comma
  included:
-   - DangerSample/
+   - DangerSample
  excluded:
-   - DangerSample/Pods
+   - Pods
+   - Dangerfile.swift
  identifier_name:
    min_length: 3
    max_length: 90

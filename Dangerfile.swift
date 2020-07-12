@@ -6,7 +6,7 @@ let danger = Danger()
 SwiftLint.lint(.all(directory: nil), inline: true)
 
 // MARK: - Properties
-let additions = danger.github.pullRequest.additions! 
+let additions = danger.github.pullRequest.additions!
 let deletions = danger.github.pullRequest.deletions!
 let changedFiles = danger.github.pullRequest.changedFiles!
 
@@ -39,7 +39,8 @@ struct Validator: ValidatorBuilder {
         if (additions + deletions) > ValidationRules.bigPRThreshold.hashValue {
             let message = """
                 PR size seems relatively large.
-                If this PR contains multiple changes, please split each into separate PR will helps faster, easier review.
+                If this PR contains multiple changes, please split each into separate PR.
+                will helps faster, easier review.
             """
             fail(message)
         }
@@ -59,15 +60,24 @@ struct Validator: ValidatorBuilder {
 
     private func checkTitle() {
         if prTitle.contains("WIP") {
-            warn("PR is classed as _Work in Progress_.")
+            let message = """
+                PR is classed as Work in Progress.
+            """
+            warn(message)
         }
 
         if prTitle.count < ValidationRules.minPRTitle.hashValue {
-            warn("PR title is too short. Please use this format `[Jira Code] - Squad - Short Description`.")
+            let message = """
+                PR title does not contain a related Jira task. Please use the format `[Jira Code] - Short Description`.
+            """
+            warn(message)
         }
 
-        if !prTitle.contains("[JIR-") {
-            warn("PR title does not contain a related Jira task. Please use the format `[Jira Code] - Short Description`.")
+        if !prTitle.contains("[JIRA-") {
+            let message = """
+                PR title does not contain a related Jira task. Please use the format `[Jira Code] - Short Description`.
+            """
+            warn(message)
         }
     }
 
@@ -78,7 +88,9 @@ struct Validator: ValidatorBuilder {
     }
 
     private func checkTests() {
-        let testFiles = editedFiles.filter { ($0.contains("Tests") || $0.contains("Test")) && ($0.fileType == .swift  || $0.fileType == .m) }
+        let testFiles = editedFiles.filter {
+            ($0.contains("Tests") || $0.contains("Test")) && ($0.fileType == .swift  || $0.fileType == .m)
+        }
 
         if testFiles.isEmpty {
             warn("PR does not contain any files related to Unit Tests")
@@ -94,8 +106,8 @@ struct Validator: ValidatorBuilder {
     }
 }
 
-fileprivate enum ValidationRules: Int {
+private enum ValidationRules: Int {
     case maxChangedFiles = 20
-    case minPRTitle = 10 
+    case minPRTitle = 10
     case bigPRThreshold = 3000
 }
