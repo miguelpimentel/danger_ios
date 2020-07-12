@@ -7,7 +7,7 @@
  included:
    - DangerSample
  excluded:
-   - DangerSample/Pods
+   - Pods
    - Dangerfile.swift
  identifier_name:
    min_length: 3
