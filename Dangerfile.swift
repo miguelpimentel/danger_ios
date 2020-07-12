@@ -66,7 +66,7 @@ struct Validator: ValidatorBuilder {
             warn("PR title is too short. Please use this format `[Jira Code] - Squad - Short Description`.")
         }
 
-        if !prTitle.contains("[JIR-") {
+        if !prTitle.contains("[JIRA-") {
             warn("PR title does not contain a related Jira task. Please use the format `[Jira Code] - Short Description`.")
         }
     }

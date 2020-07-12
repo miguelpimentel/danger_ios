@@ -8,6 +8,7 @@
    - DangerSample/
  excluded:
    - DangerSample/Pods
+   - Dangerfile
  identifier_name:
    min_length: 3
    max_length: 90
