@@ -5,9 +5,9 @@
    - colon
    - comma
  included:
-   - Danger
+   - DangerSample/
  excluded:
-   - TemKit/Pods
+   - DangerSample/Pods
  identifier_name:
    min_length: 3
    max_length: 90

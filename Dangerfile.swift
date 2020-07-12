@@ -8,7 +8,7 @@ SwiftLint.lint(.all(directory: nil), inline: true)
 // MARK: - Properties
 let additions = danger.github.pullRequest.additions! 
 let deletions = danger.github.pullRequest.deletions!
-let changedFiles = danger.github.pullRequest.changedFiles!
+let changedLines = danger.github.pullRequest.changedFiles!
 
 let modified = danger.git.modifiedFiles
 let editedFiles = modified + danger.git.createdFiles
@@ -72,7 +72,7 @@ struct Validator: ValidatorBuilder {
     }
 
     private func checkModifiedFiles() {
-        if changedFiles > ValidationRules.maxChangedFiles.hashValue {
+        if changedLines > ValidationRules.maxChangedLines.hashValue {
             fail("PR contains too many changed files. Please split it in smaller PR")
         }
     }
@@ -87,7 +87,7 @@ struct Validator: ValidatorBuilder {
 
     private func logResume() {
         let message =  """
-            The PR added __\(additions)__ and removed __\(deletions)__ lines.  __\(changedFiles)__ files changed.
+            The PR added \(additions) and removed \(deletions) lines.  \(changedFiles) files changed.
         """
 
         warn(message)
@@ -95,7 +95,7 @@ struct Validator: ValidatorBuilder {
 }
 
 fileprivate enum ValidationRules: Int {
-    case maxChangedFiles = 20
+    case maxChangedLines = 500
     case minPRTitle = 10 
     case bigPRThreshold = 3000
 }
