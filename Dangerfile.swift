@@ -66,7 +66,7 @@ struct Validator: ValidatorBuilder {
             warn("PR title is too short. Please use this format `[Jira Code] - Squad - Short Description`.")
         }
 
-        if !(prTitle.contains("[JIR-") {
+        if !prTitle.contains("[JIR-") {
             warn("PR title does not contain a related Jira task. Please use the format `[Jira Code] - Short Description`.")
         }
     }
@@ -87,7 +87,7 @@ struct Validator: ValidatorBuilder {
 
     private func logResume() {
         let message =  """
-            The PR added __\(additions)__ and removed __\(deletions)__ lines.  __\(changedFiles)__ files changed.
+            The PR added \(additions) and removed \(deletions) lines.  \(changedFiles) files changed.
         """
 
         warn(message)
